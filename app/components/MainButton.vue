@@ -1,4 +1,4 @@
 <template>
-    <span>Heeeeeeeq</span>
-    <button>I'm button</button>
+  <span>Heeeeeeeq</span>
+  <button>I'm button</button>
 </template>
