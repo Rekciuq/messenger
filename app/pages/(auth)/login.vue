@@ -4,5 +4,5 @@ definePageMeta({
 });
 </script>
 <template>
-    <p>login</p>
+    <AuthLoginForm />
 </template>

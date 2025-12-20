@@ -1,12 +1,14 @@
 <script lang="ts" setup>
 const route = useRoute();
 const isLogin = route.fullPath.includes("login");
-console.log("isLogin", isLogin);
+const authTitle = isLogin ? "Login": "Signup"
 </script>
+
 <template>
     <div>
-        hey
-        {{ isLogin }}
+        <main-icon />
+        <h1>Welcome to the Messenger</h1>
+        {{ authTitle }}
         <slot />
     </div>
 </template>
