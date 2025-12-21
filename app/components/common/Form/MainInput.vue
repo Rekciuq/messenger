@@ -23,10 +23,8 @@ const {
     hasError?: boolean;
 }>();
 
-// TODO: add base styling
-const baseClasses = "";
-// TODO: add border styling on error
-const mergedClasses = computed(() =>cn(baseClasses, hasError ? "" : "", classes));
+const baseClasses = "border border-2 w-full px-4 py-3 rounded-xl border-gray-200 focus:border-brand focus:ring-2 focus:ring-brand/20 outline-none transition-all";
+const mergedClasses = computed(() =>cn(baseClasses, hasError ? "border-accent focus:border-accent focus:ring-accent/25" : "", classes));
 </script>
 
 <template>

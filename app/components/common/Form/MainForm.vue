@@ -3,7 +3,7 @@ import { useForm } from "vee-validate";
 import { toTypedSchema } from "@vee-validate/zod"
 import type z from "zod";
 
-const { schema } = defineProps<{ schema: T }>();
+const { schema, classes = "" } = defineProps<{ schema: T; classes?: string }>();
 const { handleSubmit } = useForm({ validationSchema: toTypedSchema(schema) });
 
 const emit = defineEmits<{
@@ -11,10 +11,13 @@ const emit = defineEmits<{
 }>()
 
 const onSubmit = handleSubmit((values) => emit("submit", values))
+
+const baseClasses = "w-full"
+const mergedClasses = computed(() =>cn(baseClasses, classes))
 </script>
 
 <template>
-    <form @submit="onSubmit">
+    <form :class="mergedClasses" @submit="onSubmit">
         <slot />
     </form>
 </template>

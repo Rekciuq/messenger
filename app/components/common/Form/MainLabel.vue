@@ -2,20 +2,23 @@
 
 const {
     name,
-    label,
+    label = "",
     classes = "",
     hasError = false
 } = defineProps<{
     name: string;
-    label: string;
+    label?: string;
     classes?: string;
     hasError?:boolean;
 }>();
 
-const baseClasses = "";
-const mergedClasses = computed(() =>cn(baseClasses, hasError ? "" : "", classes));
+const baseClasses = "block text-sm font-medium text-text-primary mb-2";
+const mergedClasses = computed(() =>cn(baseClasses, hasError ? "text-accent" : "", classes));
 </script>
 
 <template>
-    <label :for="name" :class="mergedClasses">{{ label }}</label>
+    <label v-if="label" :for="name" :class="mergedClasses">
+        {{ label }}
+    </label>
+    <slot v-else />
 </template>

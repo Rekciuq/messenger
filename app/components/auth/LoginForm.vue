@@ -8,15 +8,13 @@ const onSubmit = (values: LoginData ) => console.log(values)
 </script>
 
 <template>
-    <CommonFormMainForm
-:schema="loginSchema" @submit="(values) => {
-    console.log(values)
-        // make call to the backend
-        // set some states
-        // do other shit
-    }" >
-        <CommonFormFieldsTextField name="email" label="Email" />
-        <CommonFormFieldsTextField name="password" label="Password" />
-        <button>Button</button>
-    </CommonFormMainForm>
+    <CommonMainCard>
+        <CommonFormMainForm :schema="loginSchema" @submit="onSubmit">
+            <CommonFormFieldsTextField name="email" label="Email" type="email" placeholder="name@example.com" />
+            <CommonFormFieldsPasswordField name="password" label="Password" placeholder="Enter your password" />
+            <div class="mt-6">
+                <MainButton type="submit">Sign In</MainButton>
+            </div>
+        </CommonFormMainForm>
+    </CommonMainCard>
 </template>

@@ -1,1 +1,34 @@
 @import "tailwindcss";
+
+@theme {
+  /* --- PALETTE --- */
+
+  /* Primary Deep Teal Green */
+  /* Usage: bg-brand, text-brand, border-brand */
+  --color-brand: #2F555A;
+  --color-brand-dark: #254246; /* 10% Darker for hover states */
+  --color-brand-light: #457b82; /* Lighter for gradients/accents */
+
+  /* Soft Coral Orange (Accent) */
+  /* Usage: bg-accent, text-accent */
+  --color-accent: #F07F65;
+  --color-accent-dark: #e06d52; /* Darker for hover states */
+
+  /* Backgrounds */
+  /* Usage: bg-app-bg */
+  --color-app-bg: #F5F7FB;
+
+  /* Neutrals (Mapping specific text colors) */
+  --color-text-primary: #1F2937;
+  --color-text-secondary: #9CA3AF;
+
+  /* --- EXTENSIONS --- */
+  
+  /* Custom Shadow for the teal blocks */
+  /* Usage: shadow-brand */
+  --shadow-brand: 0 10px 15px -3px rgba(47, 85, 90, 0.3);
+  
+  /* Custom Shadow for orange buttons */
+  /* Usage: shadow-accent */
+  --shadow-accent: 0 10px 15px -3px rgba(240, 127, 101, 0.3);
+}

@@ -1,15 +1,29 @@
 <script lang="ts" setup>
 import { useField } from "vee-validate";
 
-const { name, label } = defineProps<{ name: string, label: string }>();
+const { 
+    name, 
+    label, 
+    placeholder = ""
+} = defineProps<{ 
+    name: string; 
+    label: string;
+    placeholder?: string;
+}>();
 const { errors, value } = useField<string | number>(() => name);
-const hasErrors = !!errors.value.length;
+const hasErrors = computed(() =>!!errors.value.length);
 </script>
 
 <template>
-    <div>
+    <div class="mb-6">
         <CommonFormMainLabel :name="name" :label="label" :has-error="hasErrors" />
-        <CommonFormMainInput v-model="value" :name="name" type="text" />
+        <CommonFormMainInput 
+            v-model="value" 
+            :name="name" 
+            :placeholder="placeholder"
+            :has-error="hasErrors" 
+            type="text"
+        />
         <CommonFormMainErrorMessage :error-messages="errors" />
     </div>
 </template>

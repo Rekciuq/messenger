@@ -1,17 +1,17 @@
 <script lang="ts" setup>
 const {
-    size = "w-12 h-12",
+    size = "w-5 h-5",
     classes = ""
 } = defineProps<{
     size?: string;
     classes?: string;
 }>();
 
-const baseClasses = "text-brand";
+const baseClasses = "text-text-secondary";
 const mergedClasses = computed(() => cn(baseClasses, size, classes));
 </script>
 
-<!-- customized icon from: https://tabler.io/icons/icon/message-chatbot  -->
+<!-- icon from: https://tabler.io/icons/icon/eye-off -->
 <template>
     <svg
         xmlns="http://www.w3.org/2000/svg"
@@ -24,8 +24,9 @@ const mergedClasses = computed(() => cn(baseClasses, size, classes));
         :class="mergedClasses"
     >
         <path stroke="none" d="M0 0h24v24H0z" fill="none" />
-        <path
-            d="M18 4a3 3 0 0 1 3 3v8a3 3 0 0 1 -3 3h-5l-5 3v-3h-2a3 3 0 0 1 -3 -3v-8a3 3 0 0 1 3 -3h12z"
-        />
+        <path d="M10.585 10.587a2 2 0 0 0 2.829 2.828" />
+        <path d="M16.681 16.673a8.717 8.717 0 0 1 -4.681 1.327c-3.6 0 -6.6 -2 -9 -6c1.272 -2.12 2.712 -3.678 4.32 -4.674m2.86 -1.146a9.055 9.055 0 0 1 1.82 -.18c3.6 0 6.6 2 9 6c-.666 1.11 -1.379 2.067 -2.138 2.87" />
+        <path d="M3 3l18 18" />
     </svg>
 </template>
+
