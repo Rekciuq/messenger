@@ -1,10 +1,22 @@
 <script lang="ts" setup>
 import type z from 'zod';
 import loginSchema from '~/schemas/auth/login.schema';
+import { toast } from 'vue-sonner';
 
 type LoginData = z.infer<typeof loginSchema>
 
-const onSubmit = (values: LoginData ) => console.log(values)
+const router = useRouter();
+
+const onSubmit = async (values: LoginData ) => {
+    await apiFetch('/api/v1/auth/login', {
+        method: 'POST',
+        body: values,
+        onSuccess: (_, message) => {
+            toast.success(message);
+            router.push('/');
+        }
+    });
+}
 </script>
 
 <template>

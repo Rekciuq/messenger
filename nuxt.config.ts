@@ -4,7 +4,7 @@ import tailwindcss from "@tailwindcss/vite";
 export default defineNuxtConfig({
   compatibilityDate: "2025-07-15",
   devtools: { enabled: true },
-  css: ["./app/assets/css/main.css"],
+  css: ["./app/assets/css/main.css", "vue-sonner/style.css"],
   vite: { plugins: [tailwindcss()] },
   modules: [
     "@nuxt/eslint",
@@ -13,4 +13,7 @@ export default defineNuxtConfig({
     "@nuxt/image",
     "@nuxt/test-utils",
   ],
+  runtimeConfig: {
+    jwtSecret: process.env.JWT_SECRET,
+  },
 });
