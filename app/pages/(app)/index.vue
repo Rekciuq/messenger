@@ -25,98 +25,11 @@ const handleChatBack = () => {
     selectedChatId.value = undefined;
 };
 
-const chats = [
-    {
-        id: "1",
-        name: "John Doe",
-        lastMessage: "Hello, how are you?",
-        timestamp: "2021-01-01",
-    },
-    {
-        id: "2",
-        name: "Jane Doe",
-        lastMessage: "Hello, how are you?",
-        timestamp: "2021-01-01",
-    },
-    {
-        id: "3",
-        name: "Jim Doe",
-        lastMessage: "Hello, how are you?",
-        timestamp: "2021-01-01",
-    },
-    {
-        id: "1",
-        name: "John Doe",
-        lastMessage: "Hello, how are you?",
-        timestamp: "2021-01-01",
-    },
-    {
-        id: "2",
-        name: "Jane Doe",
-        lastMessage: "Hello, how are you?",
-        timestamp: "2021-01-01",
-    },
-    {
-        id: "3",
-        name: "Jim Doe",
-        lastMessage: "Hello, how are you?",
-        timestamp: "2021-01-01",
-    },
-    {
-        id: "1",
-        name: "John Doe",
-        lastMessage: "Hello, how are you?",
-        timestamp: "2021-01-01",
-    },
-    {
-        id: "2",
-        name: "Jane Doe",
-        lastMessage: "Hello, how are you?",
-        timestamp: "2021-01-01",
-    },
-    {
-        id: "3",
-        name: "Jim Doe",
-        lastMessage: "Hello, how are you?",
-        timestamp: "2021-01-01",
-    },
-    {
-        id: "1",
-        name: "John Doe",
-        lastMessage: "Hello, how are you?",
-        timestamp: "2021-01-01",
-    },
-    {
-        id: "2",
-        name: "Jane Doe",
-        lastMessage: "Hello, how are you?",
-        timestamp: "2021-01-01",
-    },
-    {
-        id: "3",
-        name: "Jim Doe",
-        lastMessage: "Hello, how are you?",
-        timestamp: "2021-01-01",
-    },
-    {
-        id: "1",
-        name: "John Doe",
-        lastMessage: "Hello, how are you?",
-        timestamp: "2021-01-01",
-    },
-    {
-        id: "2",
-        name: "Jane Doe",
-        lastMessage: "Hello, how are you?",
-        timestamp: "2021-01-01",
-    },
-    {
-        id: "3",
-        name: "Jim Doe",
-        lastMessage: "Hello, how are you?",
-        timestamp: "2021-01-01",
-    },
-];
+const userId = useAuthStore().session?.id;
+
+const { data: chats } = await useFetch(`/api/v1/chats/${userId}`);
+console.log(chats);
+
 </script>
 <template>
     <div class="min-h-screen bg-app-bg flex flex-col md:flex-row">
