@@ -9,6 +9,7 @@ export interface SessionData {
     bio?: string;
     profilePictureUrl: string;
     lastSeen: Date;
+    isOnline: boolean;
 }
 
 interface AuthState {
@@ -64,6 +65,16 @@ export const useAuthStore = defineStore('auth', {
         async initialize() {
             if (this.isInitialized) return;
             await this.fetchSession();
+        },
+        async updateOnlineStatus(isOnline: boolean) {
+            if (!this.session) return;
+            this.session.isOnline = isOnline;
+            $fetch('/api/v1/auth/update-online-status', {
+                method: 'POST',
+                body: {
+                    isOnline: isOnline,
+                },
+            });
         },
 
         clearSession() {

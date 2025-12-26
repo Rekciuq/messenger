@@ -1,9 +1,27 @@
 <script lang="ts" setup>
 import ChatView from "~/components/dashboard/ChatView.vue";
 import Sidebar from "~/components/dashboard/Sidebar.vue";
+import { socket } from "~/utils/socket";
 
 definePageMeta({
     layout: "app",
+});
+
+const authStore = useAuthStore();
+
+onMounted(() => {
+    socket.connect();
+    socket.on('connect', () => {
+        authStore.updateOnlineStatus(true);
+        console.log('Connected to server');
+    });
+    socket.on('disconnect', () => {
+        authStore.updateOnlineStatus(false);
+    });
+});
+
+onBeforeUnmount(() => {
+    socket.disconnect();
 });
 
 

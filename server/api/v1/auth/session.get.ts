@@ -25,6 +25,7 @@ export default defineEventHandler(async (event) => {
         bio: user.bio,
         profilePictureUrl: user.profilePicture.url,
         lastSeen: user.lastSeen.toISOString(),
+        isOnline: user.isOnline,
     }, "Session retrieved");
 });
 

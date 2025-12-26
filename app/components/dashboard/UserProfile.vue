@@ -14,10 +14,16 @@ const emit = defineEmits<{
 
 const authStore = useAuthStore();
 
-const {userEmail, userProfilePicture, lastSeen} = storeToRefs(authStore);
+const {userEmail, userProfilePicture, lastSeen, isOnline} = storeToRefs(authStore);
 
 const baseClasses = "flex items-center gap-4 p-4 bg-white rounded-xl shadow-sm cursor-pointer hover:shadow-md transition-all";
 const mergedClasses = computed(() => cn(baseClasses, classes));
+const lastSeenText = computed(() => {
+    if (isOnline.value) {
+        return "Online";
+    }
+    return lastSeen.value;
+});
 </script>
 
 <template>
@@ -29,7 +35,7 @@ const mergedClasses = computed(() => cn(baseClasses, classes));
         </div>
         <div class="flex-1 min-w-0">
             <p class="text-sm font-medium text-text-primary truncate">{{ userEmail }}</p>
-            <p class="text-xs text-text-secondary">{{ lastSeen }}</p>
+            <p class="text-xs text-text-secondary">{{ lastSeenText }}</p>
         </div>
     </div>
 </template>

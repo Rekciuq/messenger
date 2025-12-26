@@ -1,6 +1,7 @@
 import { userRepository } from "../dll/UserRepository";
 import { imageRepository } from "../dll/ImageRepository";
 import bcrypt from "bcrypt";
+import { DateTime } from "luxon";
 
 export interface SignInInput {
     email: string;
@@ -64,6 +65,12 @@ export class AuthService {
             await imageRepository.deleteById(imageId);
             throw error;
         }
+    }
+    async updateOnlineStatus(userId: string, isOnline: boolean) {
+        return userRepository.update(userId, {
+            isOnline: isOnline,
+            lastSeen: DateTime.now().toJSDate(),
+        });
     }
 }
 
