@@ -4,23 +4,11 @@ import LogoutButton from "~/components/dashboard/LogoutButton.vue";
 import ProfileButton from "~/components/dashboard/ProfileButton.vue";
 import MinimizedChatList from "~/components/dashboard/MinimizedChatList.vue";
 
-interface Chat {
-    id: string;
-    name: string;
-    lastMessage: string;
-    timestamp: string;
-    unreadCount?: number;
-    avatarUrl?: string;
-}
-
 const {
-    userProfilePictureUrl,
     chats,
     selectedChatId = undefined,
     classes = ""
 } = defineProps<{
-    userEmail: string;
-    userProfilePictureUrl: string;
     chats: Chat[];
     selectedChatId?: string;
     classes?: string;
@@ -41,7 +29,6 @@ const mergedClasses = computed(() => cn(baseClasses, classes));
         <div class="shrink-0 mb-6 flex justify-center items-center">
             <ProfileButton
                 class="w-14 h-14"
-                :image-url="userProfilePictureUrl"
                 @click="emit('user-click')"
             />
         </div>

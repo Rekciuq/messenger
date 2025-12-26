@@ -4,23 +4,10 @@ import ChatList from "~/components/dashboard/ChatList.vue";
 import MinimizedSidebar from "~/components/dashboard/MinimizedSidebar.vue";
 import LogoutButton from "~/components/dashboard/LogoutButton.vue";
 
-interface Chat {
-    id: string;
-    name: string;
-    lastMessage: string;
-    timestamp: string;
-    unreadCount?: number;
-    avatarUrl?: string;
-}
-
 const {
-    userEmail,
-    userProfilePictureUrl,
     chats,
     selectedChatId = ""
 } = defineProps<{
-    userEmail: string;
-    userProfilePictureUrl: string;
     chats: Chat[];
     selectedChatId?: string;
 }>();
@@ -30,9 +17,6 @@ const emit = defineEmits<{
     "chat-select": [chatId: string];
 }>();
 
-const lastSeen = computed(() => {
-    return "Online";
-});
 </script>
 
 <template>
@@ -54,8 +38,6 @@ const lastSeen = computed(() => {
                 class="h-full"
             >
                 <MinimizedSidebar
-                    :user-email="userEmail"
-                    :user-profile-picture-url="userProfilePictureUrl || ''"
                     :chats="chats"
                     :selected-chat-id="selectedChatId"
                     @user-click="emit('user-click')"
@@ -72,9 +54,6 @@ const lastSeen = computed(() => {
                 </div>
 
                 <UserProfile
-                    :email="userEmail"
-                    :profile-picture-url="userProfilePictureUrl"
-                    :last-seen="lastSeen"
                     :classes="'shrink-0 mb-6'"
                     @click="emit('user-click')"
                 />

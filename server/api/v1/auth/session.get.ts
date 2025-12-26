@@ -23,7 +23,8 @@ export default defineEventHandler(async (event) => {
         email: user.email,
         userName: user.userName,
         bio: user.bio,
-        profilePictureId: user.profilePictureId,
+        profilePictureUrl: user.profilePicture.url,
+        lastSeen: user.lastSeen.toISOString(),
     }, "Session retrieved");
 });
 

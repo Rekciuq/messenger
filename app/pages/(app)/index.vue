@@ -6,12 +6,8 @@ definePageMeta({
     layout: "app",
 });
 
-const selectedChatId = ref<string | undefined>(undefined);
 
-const selectedChat = computed(() => {
-    if (!selectedChatId.value) return null;
-    return chats.find(chat => chat.id === selectedChatId.value) || null;
-});
+const selectedChatId = ref<string | undefined>(undefined);
 
 const handleChatSelect = (chatId: string) => {
     selectedChatId.value = chatId;
@@ -28,15 +24,19 @@ const handleSendMessage = (message: string) => {
 const handleChatBack = () => {
     selectedChatId.value = undefined;
 };
-const userEmail = "user@example.com";
-const userProfilePicture = "https://via.placeholder.com/150";
-</script>
 
+const chats = [
+    {
+        id: "1",
+        name: "John Doe",
+        lastMessage: "Hello, how are you?",
+        timestamp: "2021-01-01",
+    },
+];
+</script>
 <template>
     <div class="min-h-screen bg-app-bg flex flex-col md:flex-row">
         <Sidebar
-            :user-email="userEmail"
-            :user-profile-picture-url="userProfilePicture"
             :chats="chats"
             :selected-chat-id="selectedChatId"
             @user-click="handleUserClick"

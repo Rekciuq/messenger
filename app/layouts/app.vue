@@ -1,42 +1,24 @@
 <script lang="ts" setup>
-interface SessionData {
-    id: string;
-    email: string;
-    userName: string;
-    bio?: string;
-    profilePictureId?: string;
-}
+import { useAuthStore } from "~/stores/auth";
+import SpinnerIcon from "~/components/common/icons/SpinnerIcon.vue";
 
-interface SessionResponse {
-    success: boolean;
-    data?: SessionData;
-}
+const authStore = useAuthStore();
 
-// Fetch session data on layout mount
-const session = ref<SessionData | null>(null);
-const loading = ref(true);
-
-onMounted(async () => {
-    try {
-        const response = await $fetch<SessionResponse>('/api/v1/auth/session');
-        if (response && response.data) {
-            session.value = response.data;
-        }
-    } catch (error) {
-        console.error('Failed to fetch session:', error);
-    } finally {
-        loading.value = false;
-    }
+onBeforeMount(async () => {
+    await authStore.initialize();
 });
 
-// Provide session to child components
-provide('session', session);
-provide('sessionLoading', loading);
+const loading = computed(() => authStore.isLoading && !authStore.isInitialized);
 </script>
 
 <template>
     <div>
-        <slot />
+        <slot v-if="!loading" />
+        <div v-else>
+            <div class="flex items-center justify-center h-screen">
+                <SpinnerIcon :size="6" />
+            </div>
+        </div>
     </div>
 </template>
 

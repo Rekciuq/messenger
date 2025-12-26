@@ -27,7 +27,7 @@ export class UserRepository {
     }
 
     async findById(id: string) {
-        return prisma.user.findUnique({ where: { id } });
+        return prisma.user.findUnique({ where: { id }, include: { profilePicture: { select: { url: true } } } });
     }
 
     async update(id: string, data: Prisma.UserUpdateInput) {

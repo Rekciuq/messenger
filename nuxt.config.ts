@@ -7,6 +7,7 @@ export default defineNuxtConfig({
   css: ["./app/assets/css/main.css", "vue-sonner/style.css"],
   vite: { plugins: [tailwindcss()] },
   modules: [
+    "@pinia/nuxt",
     "@nuxt/eslint",
     "@nuxt/fonts",
     "@nuxt/icon",
