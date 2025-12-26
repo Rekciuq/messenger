@@ -35,7 +35,7 @@ const emit = defineEmits<{
         >
             <div
                 v-if="selectedChatId"
-                class="h-full"
+                class="h-full shadow-lg"
             >
                 <MinimizedSidebar
                     :chats="chats"

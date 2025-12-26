@@ -32,6 +32,90 @@ const chats = [
         lastMessage: "Hello, how are you?",
         timestamp: "2021-01-01",
     },
+    {
+        id: "2",
+        name: "Jane Doe",
+        lastMessage: "Hello, how are you?",
+        timestamp: "2021-01-01",
+    },
+    {
+        id: "3",
+        name: "Jim Doe",
+        lastMessage: "Hello, how are you?",
+        timestamp: "2021-01-01",
+    },
+    {
+        id: "1",
+        name: "John Doe",
+        lastMessage: "Hello, how are you?",
+        timestamp: "2021-01-01",
+    },
+    {
+        id: "2",
+        name: "Jane Doe",
+        lastMessage: "Hello, how are you?",
+        timestamp: "2021-01-01",
+    },
+    {
+        id: "3",
+        name: "Jim Doe",
+        lastMessage: "Hello, how are you?",
+        timestamp: "2021-01-01",
+    },
+    {
+        id: "1",
+        name: "John Doe",
+        lastMessage: "Hello, how are you?",
+        timestamp: "2021-01-01",
+    },
+    {
+        id: "2",
+        name: "Jane Doe",
+        lastMessage: "Hello, how are you?",
+        timestamp: "2021-01-01",
+    },
+    {
+        id: "3",
+        name: "Jim Doe",
+        lastMessage: "Hello, how are you?",
+        timestamp: "2021-01-01",
+    },
+    {
+        id: "1",
+        name: "John Doe",
+        lastMessage: "Hello, how are you?",
+        timestamp: "2021-01-01",
+    },
+    {
+        id: "2",
+        name: "Jane Doe",
+        lastMessage: "Hello, how are you?",
+        timestamp: "2021-01-01",
+    },
+    {
+        id: "3",
+        name: "Jim Doe",
+        lastMessage: "Hello, how are you?",
+        timestamp: "2021-01-01",
+    },
+    {
+        id: "1",
+        name: "John Doe",
+        lastMessage: "Hello, how are you?",
+        timestamp: "2021-01-01",
+    },
+    {
+        id: "2",
+        name: "Jane Doe",
+        lastMessage: "Hello, how are you?",
+        timestamp: "2021-01-01",
+    },
+    {
+        id: "3",
+        name: "Jim Doe",
+        lastMessage: "Hello, how are you?",
+        timestamp: "2021-01-01",
+    },
 ];
 </script>
 <template>

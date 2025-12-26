@@ -26,14 +26,14 @@ const mergedClasses = computed(() => cn(baseClasses, classes));
 
 <template>
     <div :class="mergedClasses">
-        <div class="shrink-0 mb-6 flex justify-center items-center">
+        <div class="shrink-0 flex justify-center items-center bg-white py-2 rounded-lg shadow-lg">
             <ProfileButton
                 class="w-14 h-14"
                 @click="emit('user-click')"
             />
         </div>
 
-        <div class="flex-1 min-h-0 overflow-y-auto scrollbar-thin px-1">
+        <div class="flex-1 min-h-0 overflow-y-auto scrollbar-thin px-1 bg-app-bg">
             <MinimizedChatList
                 :chats="chats"
                 :selected-chat-id="selectedChatId"
@@ -41,7 +41,7 @@ const mergedClasses = computed(() => cn(baseClasses, classes));
             />
         </div>
 
-        <div class="shrink-0 mt-6 flex items-center justify-center">
+        <div class="shrink-0 flex items-center justify-center bg-white py-2 rounded-lg shadow-lg">
             <LogoutButton
                 variant="icon"
             />
