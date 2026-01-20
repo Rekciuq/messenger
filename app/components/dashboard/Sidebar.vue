@@ -3,12 +3,13 @@ import UserProfile from "~/components/dashboard/UserProfile.vue";
 import ChatList from "~/components/dashboard/ChatList.vue";
 import MinimizedSidebar from "~/components/dashboard/MinimizedSidebar.vue";
 import LogoutButton from "~/components/dashboard/LogoutButton.vue";
+import type { ChatView } from "~~/server/bll/ChatService";
 
 const {
-    chats,
+    chats = [],
     selectedChatId = ""
 } = defineProps<{
-    chats: Chat[];
+    chats?: ChatView[];
     selectedChatId?: string;
 }>();
 
@@ -16,6 +17,19 @@ const emit = defineEmits<{
     "user-click": [];
     "chat-select": [chatId: string];
 }>();
+
+
+
+const authStore = useAuthStore();
+
+const {userEmail, userProfilePicture, lastSeen, isOnline} = storeToRefs(authStore);
+
+const user = computed(() => ({
+    email: userEmail.value,
+    profilePicture: userProfilePicture.value,
+    lastSeen: lastSeen.value.toString(),
+    isOnline: isOnline.value
+}))
 
 </script>
 
@@ -54,6 +68,7 @@ const emit = defineEmits<{
                 </div>
 
                 <UserProfile
+                    :user="user"
                     :classes="'shrink-0 mb-6'"
                     @click="emit('user-click')"
                 />

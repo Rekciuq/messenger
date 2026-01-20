@@ -1,24 +1,27 @@
 <script lang="ts" setup>
+import UserProfile from "~/components/dashboard/UserProfile.vue";
 import BackArrowIcon from "~/components/common/icons/BackArrowIcon.vue";
-import UserAvatar from "~/components/dashboard/UserAvatar.vue";
+import type { ParticipantView } from "~~/server/bll/ChatService";
 
 const {
     classes = "",
-    imageUrl,
-    userName,
-    lastSeen = ""
+    participant
 } = defineProps<{
     classes?: string;
-    imageUrl: string;
-    userName: string;
-    lastSeen?: string;
+    participant: ParticipantView
 }>();
 
 const emit = defineEmits<{
     "back": [];
+    "open-user-info-modal": []
 }>();
+
 const baseClasses = "flex items-center gap-3 p-4 border-b border-gray-200 bg-white";
 const mergedClasses = computed(() => cn(baseClasses, classes));
+
+const user = computed(() =>({email: participant.email, profilePicture: participant.profilePicture, lastSeen: participant.lastSeen.toLocaleString(), isOnline: participant.isOnline}))
+
+
 </script>
 
 <template>
@@ -33,14 +36,10 @@ const mergedClasses = computed(() => cn(baseClasses, classes));
                 class="text-text-primary"
             />
         </button>
-        <div class="relative shrink-0">
-            <UserAvatar
-                :image-url="imageUrl"
-            />
-        </div>
-        <div class="flex-1 min-w-0">
-            <h3 class="text-sm font-semibold text-text-primary truncate">{{ userName }}</h3>
-            <p class="text-xs text-text-secondary">{{ lastSeen }}</p>
-        </div>
+        <UserProfile
+            :user="user"
+            :classes="'shrink-0 p-0 rounded-none shadow-none hover:shadow-none gap-3'"
+            @click="emit('open-user-info-modal')"
+        />
     </div>
 </template>

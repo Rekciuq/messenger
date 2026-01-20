@@ -11,7 +11,8 @@ const {
     min = 0,
     max = 0,
     autocomplete = "",
-    hasError = false
+    hasError = false,
+    disabled = false
 } = defineProps<{
     name: string;
     type: InputTypeHTMLAttribute;
@@ -21,6 +22,7 @@ const {
     max?: number;
     autocomplete?: string;
     hasError?: boolean;
+    disabled?: boolean;
 }>();
 
 const baseClasses = "border border-2 w-full px-4 py-3 rounded-xl border-gray-200 focus:border-brand focus:ring-2 focus:ring-brand/20 outline-none transition-all";
@@ -37,5 +39,6 @@ const mergedClasses = computed(() =>cn(baseClasses, hasError ? "border-accent fo
         :min="min"
         :max="max"
         :autocomplete="autocomplete"
+        :disabled="disabled"
     >
 </template>

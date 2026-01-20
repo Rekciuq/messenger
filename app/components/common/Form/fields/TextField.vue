@@ -4,11 +4,13 @@ import { useField } from "vee-validate";
 const { 
     name, 
     label, 
-    placeholder = ""
+    placeholder = "",
+    disabled = false
 } = defineProps<{ 
     name: string; 
     label: string;
     placeholder?: string;
+    disabled?: boolean;
 }>();
 const { errors, value } = useField<string | number>(() => name);
 const hasErrors = computed(() =>!!errors.value.length);
@@ -23,6 +25,7 @@ const hasErrors = computed(() =>!!errors.value.length);
             :placeholder="placeholder"
             :has-error="hasErrors" 
             type="text"
+            :disabled="disabled"
         />
         <CommonFormMainErrorMessage :error-messages="errors" />
     </div>

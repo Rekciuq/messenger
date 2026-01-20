@@ -11,7 +11,8 @@ const {
     autoResize = true,
     modelValue = undefined,
     hasError = false,
-    errorMessages = []
+    errorMessages = [],
+    disabled = false
 } = defineProps<{ 
     name?: string;
     label?: string;
@@ -22,6 +23,7 @@ const {
     modelValue?: string;
     hasError?: boolean;
     errorMessages?: string[];
+    disabled?: boolean;
 }>();
 
 const emit = defineEmits<{
@@ -96,6 +98,7 @@ onMounted(() => {
             :placeholder="placeholder"
             :class="mergedClasses"
             :rows="rows"
+            :disabled="disabled"
             @input="adjustTextareaHeight"
             @keydown="(e) => emit('keydown', e)"
         />

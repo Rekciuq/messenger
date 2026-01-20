@@ -28,11 +28,21 @@ export class ImageRepository {
         return prisma.image.findUnique({ where: { id } });
     }
 
-    async deleteById(id: string) {
+    async findByUserId(id: string) {
+        return prisma.image.findFirstOrThrow({where: {User: {some: {id: id}} }})
+    }
+
+    async deleteById(id: string, newId: string) {
         const image = await prisma.image.findUnique({ where: { id } });
         if (image) {
-            await fs.unlink(getFilePath(image.id, FileFormat.IMAGE));
+            const imagePath = getFilePath(image.id, FileFormat.IMAGE)
+            try {
+            await fs.unlink(imagePath);
+            } catch (e) {
+                console.warn('Failed to delete image file', e)
+            }
         }
+        await prisma.user.updateMany({where: {profilePictureId: id}, data: {profilePictureId: newId}})
         return prisma.image.delete({ where: { id } });
     }
 

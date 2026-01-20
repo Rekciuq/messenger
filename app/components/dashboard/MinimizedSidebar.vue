@@ -3,13 +3,14 @@ import { cn } from "~/utils/cn";
 import LogoutButton from "~/components/dashboard/LogoutButton.vue";
 import ProfileButton from "~/components/dashboard/ProfileButton.vue";
 import MinimizedChatList from "~/components/dashboard/MinimizedChatList.vue";
+import type { ChatView } from "~~/server/bll/ChatService";
 
 const {
     chats,
     selectedChatId = undefined,
     classes = ""
 } = defineProps<{
-    chats: Chat[];
+    chats: ChatView[];
     selectedChatId?: string;
     classes?: string;
 }>();

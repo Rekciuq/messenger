@@ -1,4 +1,5 @@
 import prisma from "../utils/prisma";
+import type { UserChatsResponse } from "../../app/types/chat";
 
 class ChatRepository {
     async findById(id: string) {
@@ -6,7 +7,7 @@ class ChatRepository {
             where: { id },
         });
     }
-    async getUsersChats(userId: string) {
+    async getUsersChats(userId: string): Promise<UserChatsResponse> {
         return prisma.userChat.findMany({
             where: { userId },
             include: {
@@ -15,19 +16,23 @@ class ChatRepository {
                         participants: {
                             where: { userId: { not: userId } },
                             include: {
-                                user: true,
+                                user: {
+                                    include: {
+                                        profilePicture: true,
+                                    },
+                                },
                             },
                         },
-                    messages: {
-                        take: 1,
-                        orderBy: {
-                            createdAt: "desc",
-                        },
+                        messages: {
+                            take: 1,
+                            orderBy: {
+                                createdAt: "desc",
+                            },
                         },
                     },
                 },
             },
-        });
+        }) as Promise<UserChatsResponse>;
     };
 }
 

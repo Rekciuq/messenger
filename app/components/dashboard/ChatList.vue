@@ -1,21 +1,13 @@
 <script lang="ts" setup>
 import ChatListItem from "./ChatListItem.vue";
-
-interface Chat {
-    id: string;
-    name: string;
-    lastMessage: string;
-    timestamp: string;
-    unreadCount?: number;
-    avatarUrl?: string;
-}
+import type { ChatView } from "~~/server/bll/ChatService";
 
 const {
     chats = [],
-    selectedChatId,
+    selectedChatId = "",
     classes = ""
 } = defineProps<{
-    chats?: Chat[];
+    chats?: ChatView[];
     selectedChatId?: string;
     classes?: string;
 }>();

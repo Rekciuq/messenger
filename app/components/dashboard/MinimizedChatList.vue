@@ -1,23 +1,15 @@
 <script lang="ts" setup>
-import { getUIUnreadMessagesCount } from "~/utils/chats/getUIUnreadMessagesCount";
 import { cn } from "~/utils/cn";
 import UserAvatar from "~/components/dashboard/UserAvatar.vue";
+import type { ChatView } from "~~/server/bll/ChatService";
 
-interface Chat {
-    id: string;
-    name: string;
-    lastMessage: string;
-    timestamp: string;
-    unreadCount?: number;
-    avatarUrl: string;
-}
 
 const {
     chats = [],
-    selectedChatId,
+    selectedChatId = "",
     classes = ""
 } = defineProps<{
-    chats: Chat[];
+    chats?: ChatView[];
     selectedChatId?: string;
     classes?: string;
 }>();
@@ -48,16 +40,16 @@ const mergedClasses = computed(() => cn(baseClasses, classes));
             >
                 <div class="w-full h-full rounded-full overflow-hidden">
                     <UserAvatar
-                        :image-url="chat.avatarUrl"
+                        :image-url="chat.participant.profilePicture"
                         :classes="'w-full h-full'"
                     />
                 </div>
-                <div
+                <!-- <div
                     v-if="!!chat.unreadCount"
                     class="absolute -top-1 -right-1 w-5 h-5 rounded-full bg-accent text-white text-xs font-semibold flex items-center justify-center z-10"
                 >
                     {{ getUIUnreadMessagesCount(chat.unreadCount) }}
-                </div>
+                </div> -->
             </button>
         </div>
     </div>
