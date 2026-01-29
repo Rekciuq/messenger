@@ -9,7 +9,7 @@ export default defineEventHandler(async (event) => {
         return apiError(ErrorCode.VALIDATION_ERROR, "User ID is required");
     }
 
-    const chat = await chatService.getChatById(userId);
+    const chat = await chatService.getChatsById(userId);
 
     if (!chat) {
         setResponseStatus(event, ErrorCode.NOT_FOUND);

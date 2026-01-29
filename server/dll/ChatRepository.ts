@@ -3,11 +3,13 @@ import type { UserChatsResponse } from "../../app/types/chat";
 
 class ChatRepository {
     async findById(id: string) {
-        return prisma.chat.findUnique({
+        return prisma.chat.findUniqueOrThrow({
             where: { id },
         });
     }
     async getUsersChats(userId: string): Promise<UserChatsResponse> {
+        const takeOneMessage = 1
+
         return prisma.userChat.findMany({
             where: { userId },
             include: {
@@ -24,7 +26,7 @@ class ChatRepository {
                             },
                         },
                         messages: {
-                            take: 1,
+                            take: takeOneMessage,
                             orderBy: {
                                 createdAt: "desc",
                             },

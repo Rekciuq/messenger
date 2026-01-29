@@ -1,5 +1,8 @@
-import type { Prisma } from "@prisma/client";
+import type { ExtractUpdateData } from "../types/prisma";
 import prisma from "../utils/prisma";
+
+type UpdateUserData =
+  ExtractUpdateData<typeof prisma.user>;
 
 export class UserRepository {
     async findByEmail(email: string) {
@@ -30,12 +33,38 @@ export class UserRepository {
         return prisma.user.findUnique({ where: { id }, include: { profilePicture: { select: { url: true } } } });
     }
 
-    async update(id: string, data: Prisma.UserUpdateInput) {
-        return prisma.user.update({ where: { id }, data });
+    async update(id: string, data: UpdateUserData) {
+        return prisma.user.update({ where: { id }, data: data });
     }
 
     async delete(id: string) {
         return prisma.user.delete({ where: { id } });
+    }
+
+    async findRelatedUsers(id: string) {
+        const users = await prisma.user.findMany({
+            where: {
+                chats: {
+                some: {
+                    chat: {
+                    participants: {
+                        some: {
+                        userId: id
+                        }
+                    }
+                    }
+                }
+                },
+                NOT: { id: id }
+            },
+            select: {
+                id: true
+            }
+        });
+
+        const chattedUserIds = users.map(u => u.id);
+
+        return chattedUserIds
     }
 }
 

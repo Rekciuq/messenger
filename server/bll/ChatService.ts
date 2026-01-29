@@ -51,7 +51,7 @@ export class ChatService {
         });
     }
 
-    async getChatById(userId: string): Promise<ChatViewResponse> {
+    async getChatsById(userId: string): Promise<ChatViewResponse> {
         const data = await chatRepository.getUsersChats(userId);
         return this.mapToChatView(data);
     }

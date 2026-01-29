@@ -77,19 +77,26 @@ async function main() {
     // Generate Messages for each chat
     let totalMessages = 0;
     for (const { chat, users: chatUsers } of chats) {
-        // Each chat gets 5-20 messages
-        const messageCount = faker.number.int({ min: 5, max: 20 });
-        
+        // Each chat gets 200-250 messages, alternating between both users
+        const messageCount = faker.number.int({ min: 200, max: 250 });
+        const [userA, userB] = chatUsers;
+        const startIndex = faker.number.int({ min: 0, max: 1 });
+        let messageTime = faker.date.recent({ days: 30 });
+
         for (let i = 0; i < messageCount; i++) {
-            const sender = faker.helpers.arrayElement(chatUsers);
-            const createdAt = faker.date.recent({ days: 30 });
+            const sender = (i + startIndex) % 2 === 0 ? userA : userB;
+            // Increment time to keep ordering realistic
+            messageTime = new Date(
+                messageTime.getTime() +
+                    faker.number.int({ min: 1, max: 120 }) * 60 * 1000
+            );
 
             await prisma.message.create({
                 data: {
                     text: faker.lorem.sentence({ min: 3, max: 15 }),
                     senderId: sender.id,
                     chatId: chat.id,
-                    createdAt,
+                    createdAt: messageTime,
                 },
             });
             totalMessages++;

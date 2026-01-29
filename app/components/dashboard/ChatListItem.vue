@@ -17,6 +17,7 @@ const {
 const baseClasses = "flex items-center gap-3 p-4 rounded-xl cursor-pointer transition-all hover:bg-gray-50";
 const activeClasses = "bg-brand/10 border-l-4 border-brand";
 const mergedClasses = computed(() => cn(baseClasses, isActive ? activeClasses : "", classes));
+const socketStore = useSocketStore()
 </script>
 
 <template>
@@ -24,6 +25,7 @@ const mergedClasses = computed(() => cn(baseClasses, isActive ? activeClasses : 
         <div class="relative shrink-0">
             <UserAvatar
                 :image-url="chat.participant.profilePicture"
+                :is-online="socketStore.getOnlineUsers.includes(chat.participant.userId)"
             />
         </div>
         <div class="flex-1 min-w-0">

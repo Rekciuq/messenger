@@ -12,10 +12,12 @@ type UserProfileProps = {
 
 const {
     classes = "",
-    user
+    user,
+    showStatus = false
 } = defineProps<{
     classes?: string;
     user: UserProfileProps;
+    showStatus?: boolean;
 }>();
 
 const emit = defineEmits<{
@@ -38,11 +40,12 @@ const lastSeenText = computed(() => {
         <div class="relative shrink-0">
             <UserAvatar
                 :image-url="user.profilePicture"
+                :is-online="showStatus ? user.isOnline: false"
             />
         </div>
         <div class="flex-1 min-w-0">
             <p class="text-sm font-medium text-text-primary truncate">{{ user.email }}</p>
-            <p class="text-xs text-text-secondary">{{ lastSeenText }}</p>
+            <p v-if="showStatus" class="text-xs text-text-secondary">{{ lastSeenText }}</p>
         </div>
     </div>
 </template>

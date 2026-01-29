@@ -32,7 +32,7 @@ export class ImageRepository {
         return prisma.image.findFirstOrThrow({where: {User: {some: {id: id}} }})
     }
 
-    async deleteById(id: string, newId: string) {
+    async deleteById(id: string, newId?: string) {
         const image = await prisma.image.findUnique({ where: { id } });
         if (image) {
             const imagePath = getFilePath(image.id, FileFormat.IMAGE)
@@ -42,7 +42,9 @@ export class ImageRepository {
                 console.warn('Failed to delete image file', e)
             }
         }
-        await prisma.user.updateMany({where: {profilePictureId: id}, data: {profilePictureId: newId}})
+        if(newId) {
+            await prisma.user.updateMany({where: {profilePictureId: id}, data: {profilePictureId: newId}})
+        }
         return prisma.image.delete({ where: { id } });
     }
 

@@ -19,8 +19,8 @@ const emit = defineEmits<{
 const baseClasses = "flex items-center gap-3 p-4 border-b border-gray-200 bg-white";
 const mergedClasses = computed(() => cn(baseClasses, classes));
 
-const user = computed(() =>({email: participant.email, profilePicture: participant.profilePicture, lastSeen: participant.lastSeen.toLocaleString(), isOnline: participant.isOnline}))
-
+const socketStore = useSocketStore()
+const user = computed(() =>({email: participant.email, profilePicture: participant.profilePicture, lastSeen: participant.lastSeen.toLocaleString(), isOnline: !!socketStore.getOnlineUsers.find((id) => id === participant.userId)}))
 
 </script>
 
@@ -39,6 +39,7 @@ const user = computed(() =>({email: participant.email, profilePicture: participa
         <UserProfile
             :user="user"
             :classes="'shrink-0 p-0 rounded-none shadow-none hover:shadow-none gap-3'"
+            :show-status="true"
             @click="emit('open-user-info-modal')"
         />
     </div>

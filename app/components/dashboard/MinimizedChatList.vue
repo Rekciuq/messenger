@@ -20,6 +20,7 @@ const emit = defineEmits<{
 
 const baseClasses = "flex flex-col gap-5 py-2";
 const mergedClasses = computed(() => cn(baseClasses, classes));
+const socketStore = useSocketStore()
 </script>
 
 <template>
@@ -38,10 +39,11 @@ const mergedClasses = computed(() => cn(baseClasses, classes));
                 )"
                 @click="emit('chat-select', chat.id)"
             >
-                <div class="w-full h-full rounded-full overflow-hidden">
+                <div class="w-full h-full rounded-full">
                     <UserAvatar
                         :image-url="chat.participant.profilePicture"
                         :classes="'w-full h-full'"
+                        :is-online="socketStore.getOnlineUsers.includes(chat.participant.userId)"
                     />
                 </div>
                 <!-- <div
