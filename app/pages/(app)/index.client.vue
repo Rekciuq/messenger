@@ -1,10 +1,12 @@
 <script lang="ts" setup>
   import ChatView from "~/components/dashboard/ChatView.vue";
   import Sidebar from "~/components/dashboard/Sidebar.vue";
+  import UserSearchDropdown from "~/components/dashboard/UserSearchDropdown.vue";
   import type { ApiResponse } from "~/types/api";
   import type { ChatViewResponse } from "~~/server/bll/ChatService";
   import Modal from "~/components/common/Modal.vue";
   import UserInfoForm from "~/components/userProfile/UserInfoForm.vue";
+  import { useQueryClient } from "@tanstack/vue-query";
 
   definePageMeta({
     layout: "app",
@@ -12,6 +14,7 @@
 
   const authStore = useAuthStore();
   const socketStore = useSocketStore();
+  const queryClient = useQueryClient();
 
   const userId = computed(() => authStore.session?.id);
   const userAdditionalData = computed(() => ({
@@ -53,13 +56,14 @@
     selectedChatId.value = undefined;
   };
 
-  const { data: chats } = await useFetch<ApiResponse<ChatViewResponse>>(
-    `/api/v1/chats/${userId.value}`,
-  );
-  const chatsData = chats.value?.data;
+  const { data: chats, refresh: refreshChats } = await useFetch<
+    ApiResponse<ChatViewResponse>
+  >(`/api/v1/chats/${userId.value}`);
+
+  const chatsData = computed(() => chats.value?.data);
 
   const selectedChat = computed(() =>
-    chatsData?.find((chatView) => chatView.id === selectedChatId.value),
+    chatsData.value?.find((chatView) => chatView.id === selectedChatId.value),
   );
 
   const isModalOpenRef = ref(false);
@@ -81,6 +85,35 @@
     newBio: selectedChat.value?.participant.bio,
     newProfilePicture: selectedChat.value?.participant.profilePicture,
   }));
+
+  const isCreatingChat = ref(false);
+
+  const handleUserSelect = async (userId: string) => {
+    if (isCreatingChat.value) return;
+
+    isCreatingChat.value = true;
+    try {
+      const response = await $fetch<{
+        success: boolean;
+        data: { chatId: string; existed: boolean };
+      }>("/api/v1/chats/create", {
+        method: "POST",
+        body: { participantId: userId },
+      });
+
+      if (response.success) {
+        await refreshChats();
+
+        queryClient.invalidateQueries({ queryKey: ["users-search"] });
+
+        selectedChatId.value = response.data.chatId;
+      }
+    } catch (error) {
+      console.error("Failed to create chat:", error);
+    } finally {
+      isCreatingChat.value = false;
+    }
+  };
 </script>
 <template>
   <div class="h-screen bg-app-bg flex flex-col md:flex-row overflow-hidden">
@@ -110,7 +143,13 @@
       :selected-chat-id="selectedChatId"
       @user-click="handleUserClick"
       @chat-select="handleChatSelect"
-    />
+    >
+      <template #search>
+        <div class="bg-white rounded-lg shadow-lg p-4">
+          <UserSearchDropdown @select="handleUserSelect" />
+        </div>
+      </template>
+    </Sidebar>
 
     <div
       :class="[

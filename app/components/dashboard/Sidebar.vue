@@ -32,8 +32,9 @@
   <div
     :class="[
       'transition-all duration-300 ease-in-out shrink-0',
+      selectedChatId ? 'hidden' : 'block',
       'md:block',
-      selectedChatId ? 'hidden md:block md:w-24' : 'w-full md:w-80',
+      selectedChatId ? 'md:w-24' : 'w-full md:w-80',
     ]"
   >
     <div
@@ -67,6 +68,10 @@
           :classes="'shrink-0 mb-6'"
           @click="emit('user-click')"
         />
+
+        <div class="shrink-0 mb-6">
+          <slot name="search" />
+        </div>
 
         <div
           class="bg-white rounded-2xl shadow-lg p-4 md:p-6 flex flex-col flex-1 min-h-0"
