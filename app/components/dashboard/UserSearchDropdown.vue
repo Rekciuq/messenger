@@ -32,21 +32,54 @@
     enabled: computed(() => debouncedSearchQuery.value.length >= 2),
   });
 
+  const isManuallyOpen = ref(true);
+
   const isDropdownOpen = computed(
     () =>
+      isManuallyOpen.value &&
       debouncedSearchQuery.value.length >= 2 &&
       (isFetching.value ||
         (searchResults.value && searchResults.value.length > 0)),
   );
 
+  const closeDropdown = () => {
+    searchQuery.value = "";
+    isManuallyOpen.value = false;
+  };
+
   const handleSelectUser = (userId: string) => {
     emit("select", userId);
-    searchQuery.value = "";
+    closeDropdown();
   };
+
+  const dropdownRef = ref<HTMLElement | null>(null);
+
+  onMounted(() => {
+    const handleClickOutside = (event: MouseEvent) => {
+      if (
+        dropdownRef.value &&
+        !dropdownRef.value.contains(event.target as Node)
+      ) {
+        closeDropdown();
+      }
+    };
+
+    document.addEventListener("mousedown", handleClickOutside);
+
+    onBeforeUnmount(() => {
+      document.removeEventListener("mousedown", handleClickOutside);
+    });
+  });
+
+  watch(searchQuery, (newValue) => {
+    if (newValue.length > 0) {
+      isManuallyOpen.value = true;
+    }
+  });
 </script>
 
 <template>
-  <div class="relative">
+  <div ref="dropdownRef" class="relative">
     <div class="relative">
       <input
         v-model="searchQuery"
