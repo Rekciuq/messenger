@@ -3,33 +3,38 @@
   import type { User } from "@prisma/client";
   import { useQuery } from "@tanstack/vue-query";
 
-  const searchQuery = defineModel<string>({ default: "" });
-
   const emit = defineEmits<{
     select: [userId: string];
   }>();
 
+  const { value: searchQuery, debouncedValue: debouncedSearchQuery } =
+    useDebouncedRef("", 500);
+
   const { data: searchResults, isFetching } = useQuery({
-    queryKey: ["users-search", searchQuery],
+    queryKey: ["users-search", debouncedSearchQuery],
     queryFn: async () => {
-      if (!searchQuery.value || searchQuery.value.length < 2) {
+      if (
+        !debouncedSearchQuery.value ||
+        debouncedSearchQuery.value.length < 2
+      ) {
         return [];
       }
 
       const response = await $fetch<{
         success: boolean;
         data: (User & { profilePicture: { url: string } })[];
-      }>(`/api/v1/users/search?q=${encodeURIComponent(searchQuery.value)}`);
-      console.log(response.data);
+      }>(
+        `/api/v1/users/search?q=${encodeURIComponent(debouncedSearchQuery.value)}`,
+      );
 
       return response.data;
     },
-    enabled: computed(() => searchQuery.value.length >= 2),
+    enabled: computed(() => debouncedSearchQuery.value.length >= 2),
   });
 
   const isDropdownOpen = computed(
     () =>
-      searchQuery.value.length >= 2 &&
+      debouncedSearchQuery.value.length >= 2 &&
       (isFetching.value ||
         (searchResults.value && searchResults.value.length > 0)),
   );
@@ -86,7 +91,7 @@
       </div>
 
       <div
-        v-else-if="!isFetching && searchQuery.length >= 2"
+        v-else-if="!isFetching && debouncedSearchQuery.length >= 2"
         class="p-4 text-center"
       >
         <p class="text-sm text-text-secondary">No users found</p>
